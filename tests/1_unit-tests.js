@@ -1,189 +1,192 @@
 const chai = require("chai");
-const { before, suite } = require("mocha");
+const { before, suite, after } = require("mocha");
 const assert = chai.assert;
 
 const Translator = require("../components/translator.js");
 
 suite("Unit Tests", () => {
-  const translator = new Translator();
+  const translatorAtB = new Translator();
+  translatorAtB.setHighlight(false);
+  translatorAtB.setLocale("american-to-british");
   suite("Translations", () => {
-    before(() => {
-      translator.setHighlight(false);
-    });
     suite("to British English", () => {
-      before(() => {
-        translator.setLocale("american-to-british");
-      });
       // Translate Mangoes are my favorite fruit. to British English
       test("Translate Mangoes are my favorite fruit.", () => {
-        translator.setText("Mangoes are my favorite fruit.");
-        translator.translate();
-        assert.equal(translator.translation, "Mangoes are my favourite fruit.");
+        translatorAtB.setText("Mangoes are my favorite fruit.");
+        translatorAtB.translate();
+        assert.equal(
+          translatorAtB.translation,
+          "Mangoes are my favourite fruit."
+        );
       });
       // Translate I ate yogurt for breakfast. to British English yoghurt
       test("Translate I ate yogurt for breakfast.", () => {
-        translator.setText("I ate yogurt for breakfast.");
-        translator.translate();
-        assert.equal(translator.translation, "I ate yoghurt for breakfast.");
+        translatorAtB.setText("I ate yogurt for breakfast.");
+        translatorAtB.translate();
+        assert.equal(translatorAtB.translation, "I ate yoghurt for breakfast.");
       });
       // Translate We had a party at my friend's condo. to British English
       test("Translate We had a party at my friend's condo.", () => {
-        translator.setText("We had a party at my friend's condo.");
-        translator.translate();
+        translatorAtB.setText("We had a party at my friend's condo.");
+        translatorAtB.translate();
         assert.equal(
-          translator.translation,
+          translatorAtB.translation,
           "We had a party at my friend's flat."
         );
       });
       // Translate Can you toss this in the trashcan for me? to British English
       test("Translate Can you toss this in the trashcan for me?", () => {
-        translator.setText("Can you toss this in the trashcan for me?");
-        translator.translate();
+        translatorAtB.setText("Can you toss this in the trashcan for me?");
+        translatorAtB.translate();
         assert.equal(
-          translator.translation,
+          translatorAtB.translation,
           "Can you toss this in the bin for me?"
         );
       });
       // Translate The parking lot was full. to British English
       test("Translate The parking lot was full.", () => {
-        translator.setText("The parking lot was full.");
-        translator.translate();
-        assert.equal(translator.translation, "The car park was full.");
+        translatorAtB.setText("The parking lot was full.");
+        translatorAtB.translate();
+        assert.equal(translatorAtB.translation, "The car park was full.");
       });
       // Translate Like a high tech Rube Goldberg machine. to British English
       test("Translate Like a high tech Rube Goldberg machine.", () => {
-        translator.setText("Like a high tech Rube Goldberg machine.");
-        translator.translate();
+        translatorAtB.setText("Like a high tech Rube Goldberg machine.");
+        translatorAtB.translate();
         assert.equal(
-          translator.translation,
+          translatorAtB.translation,
           "Like a high tech Heath Robinson device."
         );
       });
       // Translate To play hooky means to skip class or work. to British English
       test("Translate To play hooky means to skip class or work.", () => {
-        translator.setText("To play hooky means to skip class or work.");
-        translator.translate();
+        translatorAtB.setText("To play hooky means to skip class or work.");
+        translatorAtB.translate();
         assert.equal(
-          translator.translation,
+          translatorAtB.translation,
           "To bunk off means to skip class or work."
         );
       });
       // Translate No Mr. Bond, I expect you to die. to British English
       test("Translate No Mr. Bond, I expect you to die.", () => {
-        translator.setText("No Mr. Bond, I expect you to die.");
-        translator.translate();
+        translatorAtB.setText("No Mr. Bond, I expect you to die.");
+        translatorAtB.translate();
         assert.equal(
-          translator.translation,
+          translatorAtB.translation,
           "No Mr Bond, I expect you to die."
         );
       });
       // Translate Dr. Grosh will see you now. to British English
       test("Translate Dr. Grosh will see you now.", () => {
-        translator.setText("Dr. Grosh will see you now.");
-        translator.translate();
-        assert.equal(translator.translation, "Dr Grosh will see you now.");
+        translatorAtB.setText("Dr. Grosh will see you now.");
+        translatorAtB.translate();
+        assert.equal(translatorAtB.translation, "Dr Grosh will see you now.");
       });
       // Translate Lunch is at 12:15 today. to British English
       test("Translate Lunch is at 12:15 today.", () => {
-        translator.setText("Lunch is at 12:15 today.");
-        translator.translate();
-        assert.equal(translator.translation, "Lunch is at 12.15 today.");
+        translatorAtB.setText("Lunch is at 12:15 today.");
+        translatorAtB.translate();
+        assert.equal(translatorAtB.translation, "Lunch is at 12.15 today.");
       });
     });
     suite("to American English", () => {
-      before(() => {
-        translator.setLocale("british-to-american");
-      });
+      const translatorBtA = new Translator();
+      translatorBtA.setHighlight(false);
+      translatorBtA.setLocale("british-to-american");
       // Translate We watched the footie match for a while. to American English
       test("Translate We watched the footie match for a while.", () => {
-        translator.setText("We watched the footie match for a while.");
-        translator.translate();
+        translatorBtA.setText("We watched the footie match for a while.");
+        translatorBtA.translate();
         assert.equal(
-          translator.translation,
+          translatorBtA.translation,
           "We watched the soccer match for a while."
         );
       });
       // Translate Paracetamol takes up to an hour to work. to American English
       test("Translate Paracetamol takes up to an hour to work.", () => {
-        translator.setText("Paracetamol takes up to an hour to work.");
-        translator.translate();
+        translatorBtA.setText("Paracetamol takes up to an hour to work.");
+        translatorBtA.translate();
         assert.equal(
-          translator.translation,
+          translatorBtA.translation,
           "Tylenol takes up to an hour to work."
         );
       });
       // Translate First, caramelise the onions. to American English
       test("Translate First, caramelise the onions.", () => {
-        translator.setText("First, caramelise the onions.");
-        translator.translate();
-        assert.equal(translator.translation, "First, caramelize the onions.");
+        translatorBtA.setText("First, caramelise the onions.");
+        translatorBtA.translate();
+        assert.equal(
+          translatorBtA.translation,
+          "First, caramelize the onions."
+        );
       });
       // Translate I spent the bank holiday at the funfair. to American English
       test("Translate I spent the bank holiday at the funfair.", () => {
-        translator.setText("I spent the bank holiday at the funfair.");
-        translator.translate();
+        translatorBtA.setText("I spent the bank holiday at the funfair.");
+        translatorBtA.translate();
         assert.equal(
-          translator.translation,
+          translatorBtA.translation,
           "I spent the public holiday at the carnival."
         );
       });
       // Translate I had a bicky then went to the chippy. to American English
       test("Translate I had a bicky then went to the chippy.", () => {
-        translator.setText("I had a bicky then went to the chippy.");
-        translator.translate();
+        translatorBtA.setText("I had a bicky then went to the chippy.");
+        translatorBtA.translate();
         assert.equal(
-          translator.translation,
+          translatorBtA.translation,
           "I had a cookie then went to the fish-and-chip shop."
         );
       });
       // Translate I've just got bits and bobs in my bum bag. to American English
       test("Translate I've just got bits and bobs in my bum bag.", () => {
-        translator.setText("I've just got bits and bobs in my bum bag.");
-        translator.translate();
+        translatorBtA.setText("I've just got bits and bobs in my bum bag.");
+        translatorBtA.translate();
         assert.equal(
-          translator.translation,
+          translatorBtA.translation,
           "I've just got odds and ends in my fanny pack."
         );
       });
       // Translate The car boot sale at Boxted Airfield was called off. to American English
       test("Translate The car boot sale at Boxted Airfield was called off.", () => {
-        translator.setText(
+        translatorBtA.setText(
           "The car boot sale at Boxted Airfield was called off."
         );
-        translator.translate();
+        translatorBtA.translate();
         assert.equal(
-          translator.translation,
+          translatorBtA.translation,
           "The swap meet at Boxted Airfield was called off."
         );
       });
       // Translate Have you met Mrs Kalyani? to American English
       test("Translate Have you met Mrs Kalyani?", () => {
-        translator.setText("Have you met Mrs Kalyani?");
-        translator.translate();
-        assert.equal(translator.translation, "Have you met Mrs. Kalyani?");
+        translatorBtA.setText("Have you met Mrs Kalyani?");
+        translatorBtA.translate();
+        assert.equal(translatorBtA.translation, "Have you met Mrs. Kalyani?");
       });
       // Translate Prof Joyner of King's College, London. to American English
       test("Translate Prof Joyner of King's College, London.", () => {
-        translator.setText("Prof Joyner of King's College, London.");
-        translator.translate();
+        translatorBtA.setText("Prof Joyner of King's College, London.");
+        translatorBtA.translate();
         assert.equal(
-          translator.translation,
+          translatorBtA.translation,
           "Prof. Joyner of King's College, London."
         );
       });
       // Translate Tea time is usually around 4 or 4.30. to American English
       test("Translate Tea time is usually around 4 or 4.30.", () => {
-        translator.setText("Tea time is usually around 4 or 4.30.");
-        translator.translate();
+        translatorBtA.setText("Tea time is usually around 4 or 4.30.");
+        translatorBtA.translate();
         assert.equal(
-          translator.translation,
+          translatorBtA.translation,
           "Tea time is usually around 4 or 4:30."
         );
       });
     });
   });
   suite("Highlights", () => {
-    before(() => {
+    const translator = new Translator();
+    beforeEach(() => {
       translator.setHighlight(true);
     });
     // Highlight translation in Mangoes are my favorite fruit.
